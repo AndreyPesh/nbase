@@ -6,7 +6,7 @@ import { CarsService } from '../service/cars.service';
 export class CarsController {
   constructor(private carsService: CarsService) {}
   @Get('all')
-  getCars() {
+  async getCars() {
     return this.carsService.findAll();
   }
   @Post('car')
