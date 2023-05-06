@@ -14,7 +14,7 @@ export class CarsController {
     return this.carsService.findAll();
   }
   @Post('car')
-  @Roles('admin')
+  // @Roles('admin')
   addCar(@Body() car: CreateCarDto) {
     return this.carsService.create(car);
   }
