@@ -1,8 +1,11 @@
-import { Controller, Get, Header, HttpCode, Post, Body } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Post, Body, UseGuards } from '@nestjs/common';
 import { CreateCarDto } from './car.dto';
 import { CarsService } from '../service/cars.service';
+import { RolesGuard } from 'src/utils/guards/roles.guard';
+import { Roles } from 'src/utils/decorators/roles.decorator';
 
 @Controller({ host: 'localhost', path: 'cars' })
+@UseGuards(RolesGuard)
 export class CarsController {
   constructor(private carsService: CarsService) {}
   @Get('all')
@@ -10,6 +13,7 @@ export class CarsController {
     return this.carsService.findAll();
   }
   @Post('car')
+  @Roles('admin')
   addCar(@Body() car: CreateCarDto) {
     return this.carsService.create(car);
   }
