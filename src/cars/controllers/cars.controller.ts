@@ -1,8 +1,9 @@
-import { Controller, Get, Header, HttpCode, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Get, Header, HttpCode, Post, Body, UseGuards, UseInterceptors } from '@nestjs/common';
 import { CreateCarDto } from './car.dto';
 import { CarsService } from '../service/cars.service';
 import { RolesGuard } from 'src/utils/guards/roles.guard';
 import { Roles } from 'src/utils/decorators/roles.decorator';
+import { LoggingInterceptor } from 'src/utils/inceptors/logging.inceptor';
 
 @Controller({ host: 'localhost', path: 'cars' })
 @UseGuards(RolesGuard)
@@ -19,6 +20,7 @@ export class CarsController {
   }
 
   @Get()
+  @UseInterceptors(LoggingInterceptor)
   @HttpCode(300)
   @Header('Content-type', 'application/json')
   findAll() {
