@@ -5,15 +5,26 @@ import {
   RequestMethod,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CarsModule } from './cars/cars.module';
 import { LoggerMiddleware } from './middleware/logger.middleware';
 import { CarsController } from './cars/controllers/cars.controller';
 import { UserModule } from './user/user.module';
+import { User } from './user/entities/user.entity';
 
 @Module({
-  imports: [ConfigModule.forRoot(), CarsModule, UserModule],
+  imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
+    type: 'postgres',
+    host: 'localhost',
+    port: 6500,
+    username: 'root',
+    password: 'root',
+    database: 'test',
+    entities: [User],
+    synchronize: true,
+  }), CarsModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })

@@ -6,7 +6,6 @@ export class UserController {
   constructor(private userService: UserService){}
   @Get()
   getUser() {
-    const user = this.userService.getUser()
-    return `user ${user}`;
+    return `user`;
   }
 }
