@@ -4,6 +4,7 @@ import {
   NestModule,
   RequestMethod,
 } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CarsModule } from './cars/cars.module';
@@ -12,7 +13,7 @@ import { CarsController } from './cars/controllers/cars.controller';
 import { UserModule } from './user/user.module';
 
 @Module({
-  imports: [CarsModule, UserModule],
+  imports: [ConfigModule.forRoot(), CarsModule, UserModule],
   controllers: [AppController],
   providers: [AppService],
 })
