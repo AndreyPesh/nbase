@@ -13,6 +13,8 @@ import { LoggerMiddleware } from './middleware/logger.middleware';
 import { CarsController } from './cars/controllers/cars.controller';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
+import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [ConfigModule.forRoot(), TypeOrmModule.forRoot({
@@ -24,7 +26,7 @@ import { User } from './user/entities/user.entity';
     database: 'test',
     entities: [User],
     synchronize: true,
-  }), CarsModule, UserModule],
+  }), CarsModule, UserModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
