@@ -1,7 +1,7 @@
 import { Body, Controller, Get, HttpCode, HttpStatus, Post, UseGuards, Request } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthGuard } from './utils/guards/auth.guard';
-import { Request as ReqExpress } from 'express';
+import { User } from 'src/utils/decorators/user.decorator';
 
 @Controller('auth')
 export class AuthController {
@@ -15,8 +15,7 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('profile')
-  getProfile(@Request() req: ReqExpress) {
-    //@ts-ignore
-    return req.user;
+  getProfile(@User() user: {username: string}) {
+    return user;
   }
 }
