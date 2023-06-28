@@ -1,3 +1,4 @@
+// 'use client'
 import { getServerSession } from 'next-auth';
 import {
   LoginButton,
@@ -5,24 +6,23 @@ import {
   ProfileButton,
   RegisterButton,
 } from '../components/buttons';
-import { authOptions } from '@/lib/auth';
 import { User } from '@/components/user';
+import { prisma } from '@/lib/prisma';
+
+const getUser = async () => {
+  return await prisma.user.findMany()
+  
+} 
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
-  console.log(session);
+  const users = await getUser()
+  console.log(users);
+  
+
   return (
     <main className="flex justify-center items-center h-[70vh]">
       <div>
-        <LoginButton />
-        <RegisterButton />
-        <LogoutButton />
-        <ProfileButton />
-
-        <h1>Server Session</h1>
-        <pre>{JSON.stringify(session)}</pre>
-
-        <User />
+        {/* <button onClick={getUser}>Send request</button> */}
       </div>
     </main>
   );
