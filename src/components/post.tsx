@@ -5,7 +5,7 @@ import React from 'react';
 const Post = () => {
   const addPost = async () => {
     const post = await (await fetch('/api/post', {method: 'POST', headers: {'Content-type': 'application/json'}})).json()
-    console.log(post);
+    // console.log(post);
     
   }
   return (
