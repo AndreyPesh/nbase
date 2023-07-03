@@ -17,10 +17,18 @@ export default function Profile() {
       headers: { 'Content-type': 'application/json' },
     });
     if (response) {
-      console.log('set profile', response);
-
       setProfile(() => response.data);
     }
+  };
+
+  const getProfile = async () => {
+    const { data } = await axios.get('/api/profile');
+    console.log(data);
+  };
+
+  const updateIdUser = async () => {
+    const { data } = await axios.patch('/api/profile');
+    console.log(data);
   };
 
   return (
@@ -29,6 +37,8 @@ export default function Profile() {
         Add profile
       </button>
       <h1>User image: {profile && profile.image}</h1>
+      <button onClick={getProfile}>Get profile </button>
+      <button onClick={updateIdUser}>Update Id User </button>
     </main>
   );
 }
