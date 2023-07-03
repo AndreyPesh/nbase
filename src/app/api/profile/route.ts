@@ -24,8 +24,11 @@ const handler = async (req: NextRequest) => {
 const getProfile = async () => {
   const profile = await prisma.profile.findUnique({
     where: {
-      userId: 7,
+      userId: 7
     },
+    select: {
+      user: true
+    }
   });
 
   return NextResponse.json(profile);
