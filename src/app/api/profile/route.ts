@@ -1,4 +1,5 @@
 import { prisma } from '@/lib/prisma';
+import { excludeFieldsUser } from '@/utils/prisma';
 import { NextRequest, NextResponse } from 'next/server';
 
 const handler = async (req: NextRequest) => {
@@ -8,7 +9,7 @@ const handler = async (req: NextRequest) => {
         image: 'default.svg',
         user: {
           connect: {
-            id: 1,
+            id: 2,
           },
         },
       },
@@ -24,14 +25,16 @@ const handler = async (req: NextRequest) => {
 const getProfile = async () => {
   const profile = await prisma.profile.findUnique({
     where: {
-      userId: 7
+      userId: 2,
     },
     select: {
-      user: true
-    }
+      user: true,
+    },
   });
 
-  return NextResponse.json(profile);
+  const withoutPassword = profile && excludeFieldsUser(profile.user, ['password']);
+
+  return NextResponse.json(withoutPassword);
 };
 
 const updateId = async () => {
