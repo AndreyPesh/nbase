@@ -16,7 +16,7 @@ const Post = () => {
   };
 
   const getPosts = async () => {
-    const posts = await axios.get<Post[]>('/api/post', { params: { page: 2 } });
+    const posts = await axios.get<Post[]>('/api/post', { params: { page: 0 } });
     console.log(posts);
   };
 

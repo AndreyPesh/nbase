@@ -17,13 +17,27 @@ const handler = async () => {
 };
 
 const getPosts = async (req: NextRequest) => {
-
   const page = req.nextUrl.searchParams.get('page');
   const take = 3;
+
+  const aggregations = await prisma.post.aggregate({
+    _count: { authorId: true },
+    _avg: {
+      id: true,
+    },
+  });
+  console.log(`AGG `, aggregations);
+
+  const countPost = await prisma.post.count()
+  console.log(countPost);
+  
 
   const posts = await prisma.post.findMany({
     skip: Number(page) * take,
     take,
+    where: {
+      published: true,
+    },
   });
   return NextResponse.json(posts);
 };
