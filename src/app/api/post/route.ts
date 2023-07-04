@@ -1,5 +1,5 @@
 import { prisma } from '@/lib/prisma';
-import { NextResponse } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 const handler = async () => {
   const post = await prisma.post.create({
@@ -8,12 +8,24 @@ const handler = async () => {
       content: 'New post',
       author: {
         connect: {
-          id: 1
-        }
-      }
+          id: 2,
+        },
+      },
     },
   });
   return NextResponse.json(post);
 };
 
-export { handler as POST };
+const getPosts = async (req: NextRequest) => {
+
+  const page = req.nextUrl.searchParams.get('page');
+  const take = 3;
+
+  const posts = await prisma.post.findMany({
+    skip: Number(page) * take,
+    take,
+  });
+  return NextResponse.json(posts);
+};
+
+export { handler as POST, getPosts as GET };
