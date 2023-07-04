@@ -26,10 +26,15 @@ const getPosts = async (req: NextRequest) => {
       id: true,
     },
   });
-  console.log(`AGG `, aggregations);
 
   const countPost = await prisma.post.count()
-  console.log(countPost);
+
+
+  const tr = await prisma.$transaction([
+    prisma.post.create({data: {title: 'Created 1', content: 'Created with transaction'}}),
+    prisma.post.create({data: {title: 'Created 2', content: 'Created with transaction'}}),
+    prisma.post.count()
+  ])
   
 
   const posts = await prisma.post.findMany({
